@@ -1,6 +1,6 @@
 {
   "name": "dwapijs-sharedkernel",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "dwapi.js shared kernel",
   "scripts": {
     "test": "jest --forceExit --coverage --verbose --detectOpenHandles",
