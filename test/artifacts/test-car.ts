@@ -7,7 +7,7 @@ import * as faker from "faker";
 export class TestCar extends AggregateRoot {
     @Column()
     name: string;
-    @OneToMany(type => TestCarModel, m => m.testCar)
+    @OneToMany(type => TestCarModel, m => m.testCar, {cascade: true})
     models: TestCarModel[];
 
     constructor(name: string) {
@@ -32,13 +32,14 @@ export class TestCar extends AggregateRoot {
         return testCars;
     }
 
-    static getTestCarsWithModle(count: number = 2, modelCount: number = 3): Array<TestCar> {
+    static createTestCarsWithModes(count: number = 2, modelCount: number = 3): Array<TestCar> {
         let i: number;
+        let m: number;
         const testCars: Array<TestCar> = [];
         for (i = 0; i < count; i++) {
             testCars.push(new TestCar(faker.commerce.productMaterial()));
-            for (i = 0; i < modelCount; i++) {
-                TestCar.addModel(new TestCarModel(faker.commerce.productMaterial(), this));
+            for (m = 0; m < modelCount; m++) {
+                testCars[i].addModel(new TestCarModel(faker.commerce.productMaterial(), testCars[i]));
             }
         }
         return testCars;

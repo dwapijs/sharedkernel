@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { Connection } from "typeorm";
 import { IRepositoryBase } from "../core/interfaces/irepository-base";
 import { AggregateRoot } from "../core/model/aggregate-root";
@@ -23,5 +24,9 @@ export abstract class RepositoryBase<T extends AggregateRoot> implements IReposi
 
     getAll(): Promise<Array<T>> {
         return this.connection.manager.find(this.type);
+    }
+
+    get(id: string): Promise<T> {
+        return this.connection.manager.findOne(this.type, id);
     }
 }

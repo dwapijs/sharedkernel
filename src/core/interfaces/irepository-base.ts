@@ -6,4 +6,6 @@ export interface IRepositoryBase<T extends AggregateRoot> {
     createBatch(entity: T[]): Promise<T[]>;
 
     getAll(): Promise<T[]>;
+
+    get(id: string): Promise<T>;
 }

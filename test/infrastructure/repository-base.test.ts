@@ -6,6 +6,7 @@ import { TestCarModel } from "../artifacts/test-car-model";
 
 describe("Repository Base", () => {
 
+    const dummyCars = TestCar.getTestCars(5);
     const dbPath: string = "test/dwapitest.sqlite3";
     let repository: TestCarRepository;
     beforeAll(async () => {
@@ -25,7 +26,7 @@ describe("Repository Base", () => {
             synchronize: true
         });
         repository = new TestCarRepository(TestCar, connection);
-        await repository.createBatch(TestCar.getTestCars(5));
+        await repository.createBatch(dummyCars);
     });
 
     test("should create entity", async () => {
@@ -35,12 +36,13 @@ describe("Repository Base", () => {
     });
 
     test("should create entity with children", async () => {
-
-        addModel(new TestCarModel("Demi", testCar));
-        const testCar = await repository.create(new TestCar("Mazda"));
-
+        const newCar = TestCar.createTestCarsWithModes(1, 2)[0];
+        await repository.create(newCar);
+        const testCar = await repository.get(newCar.id);
         expect(testCar).not.toBeUndefined();
+        expect(testCar.models.length > 0);
         console.log(`${testCar}`);
+        testCar.models.forEach((p) => console.log(`${p}`));
     });
 
     test("should create batch entities", async () => {
@@ -53,5 +55,11 @@ describe("Repository Base", () => {
         const testCars = await repository.getAll();
         expect(testCars.length > 0);
         testCars.forEach((p) => console.log(`${p}`));
+    });
+
+    test("should find  entity by id", async () => {
+        const testCar = await repository.get(dummyCars[0].id);
+        expect(testCar).not.toBeUndefined();
+        console.log(`${testCar}`);
     });
 });
