@@ -7,7 +7,7 @@ import * as faker from "faker";
 export class TestCar extends AggregateRoot {
     @Column()
     name: string;
-    @OneToMany(type => TestCarModel, m => m.testCar, {cascade: true})
+    @OneToMany(type => TestCarModel, m => m.testCar, {cascade: true, eager: true})
     models: TestCarModel[];
 
     constructor(name: string) {
