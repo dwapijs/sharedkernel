@@ -22,7 +22,6 @@
   "dependencies": {
     "lodash": "^4.17.11",
     "reflect-metadata": "^0.1.12",
-    "sqlite3": "^4.0.2",
     "typeorm": "^0.2.7",
     "uuid": "^3.3.2"
   },
@@ -33,6 +32,7 @@
     "@types/node": "^10.11.7",
     "@types/sequelize": "^4.27.28",
     "@types/uuid": "^3.4.4",
+    "sqlite3": "^4.0.2",
     "chai": "^4.2.0",
     "faker": "^4.1.0",
     "jest": "^23.6.0",
