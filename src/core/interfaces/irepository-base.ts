@@ -8,4 +8,6 @@ export interface IRepositoryBase<T extends AggregateRoot> {
     getAll(): Promise<T[]>;
 
     get(id: string): Promise<T>;
+
+    remove(id: string): Promise<T>;
 }
