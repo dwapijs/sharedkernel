@@ -62,4 +62,11 @@ describe("Repository Base", () => {
         expect(testCar).not.toBeUndefined();
         console.log(`${testCar}`);
     });
+
+    test("should delete  entity by id", async () => {
+        const carId = dummyCars[4].id;
+        await repository.remove(carId);
+        const testCar = await repository.get(carId);
+        expect(testCar).toBeUndefined();
+    });
 });

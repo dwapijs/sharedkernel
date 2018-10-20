@@ -29,4 +29,9 @@ export abstract class RepositoryBase<T extends AggregateRoot> implements IReposi
     get(id: string): Promise<T> {
         return this.connection.manager.findOne(this.type, id);
     }
+
+    async remove(id: string): Promise<T> {
+        const entity = await this.get(id);
+        return this.connection.manager.remove(this.type, entity);
+    }
 }
