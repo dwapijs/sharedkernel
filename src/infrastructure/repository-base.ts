@@ -2,11 +2,14 @@ import "reflect-metadata";
 import { Connection } from "typeorm";
 import { IRepositoryBase } from "../core/interfaces/irepository-base";
 import { AggregateRoot } from "../core/model/aggregate-root";
+import { InjectConnection } from "typeorm-typedi-extensions";
 
 export type ObjectType<T> = { new(): T } | Function;
 
 export abstract class RepositoryBase<T extends AggregateRoot> implements IRepositoryBase<T> {
     private type: ObjectType<T>;
+
+    @InjectConnection()
     connection: Connection;
 
     constructor(type: ObjectType<T>, connection: Connection) {

@@ -1,6 +1,6 @@
 {
   "name": "dwapijs-sharedkernel",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "dwapi.js shared kernel",
   "scripts": {
     "test": "jest --forceExit --coverage --verbose --detectOpenHandles",
@@ -23,6 +23,7 @@
     "lodash": "^4.17.11",
     "reflect-metadata": "^0.1.12",
     "typeorm": "^0.2.7",
+    "typeorm-typedi-extensions": "^0.2.1",
     "uuid": "^3.3.2"
   },
   "devDependencies": {
