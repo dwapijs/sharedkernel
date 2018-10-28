@@ -7,11 +7,14 @@ import { InjectConnection } from "typeorm-typedi-extensions";
 export type ObjectType<T> = { new(): T } | Function;
 
 export abstract class RepositoryBase<T extends AggregateRoot> implements IRepositoryBase<T> {
+    @InjectConnection()
+    private connection: Connection;
     private type: ObjectType<T>;
 
-    constructor(type: ObjectType<T>, @InjectConnection()private connection: Connection) {
+    constructor(type: ObjectType<T>, connection: Connection) {
         this.type = type;
         this.connection = connection;
+        console.log(this.connection);
     }
 
     create(entity: T): Promise<T> {
