@@ -9,10 +9,7 @@ export type ObjectType<T> = { new(): T } | Function;
 export abstract class RepositoryBase<T extends AggregateRoot> implements IRepositoryBase<T> {
     private type: ObjectType<T>;
 
-    @InjectConnection()
-    connection: Connection;
-
-    constructor(type: ObjectType<T>, connection: Connection) {
+    constructor(type: ObjectType<T>, @InjectConnection()private connection: Connection) {
         this.type = type;
         this.connection = connection;
     }
