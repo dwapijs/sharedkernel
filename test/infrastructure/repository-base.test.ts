@@ -9,6 +9,7 @@ describe("Repository Base", () => {
     const dummyCars = TestCar.getTestCars(5);
     const dbPath: string = "test/dwapitest.sqlite3";
     let repository: TestCarRepository;
+
     beforeAll(async () => {
         fs.unlink(dbPath, (err) => {
                 if (err) {
@@ -68,5 +69,15 @@ describe("Repository Base", () => {
         await repository.remove(carId);
         const testCar = await repository.get(carId);
         expect(testCar).toBeUndefined();
+    });
+
+    afterAll(async () => {
+        fs.unlink(dbPath, (err) => {
+                if (err) {
+                    console.log(err);
+                }
+                console.log("db deleted !");
+            }
+        );
     });
 });
