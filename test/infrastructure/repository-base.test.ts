@@ -1,8 +1,11 @@
-import { createConnection } from "typeorm";
+import { createConnection, useContainer } from "typeorm";
 import * as fs from "fs";
 import { TestCarRepository } from "../artifacts/test-car-repository";
 import { TestCar } from "../artifacts/test-car";
 import { TestCarModel } from "../artifacts/test-car-model";
+import { Container } from "typedi";
+import { clearDb } from "../testinit";
+import { DatabaseOption } from "../database-option";
 
 describe("Repository Base", () => {
 
@@ -11,22 +14,10 @@ describe("Repository Base", () => {
     let repository: TestCarRepository;
 
     beforeAll(async () => {
-        fs.unlink(dbPath, (err) => {
-                if (err) {
-                    console.log(err);
-                    throw err;
-                }
-                console.log("db deleted !");
-            }
-        );
-        const connection = await createConnection({
-            logging: true,
-            type: "sqlite",
-            database: dbPath,
-            entities: ["test/artifacts/*.ts"],
-            synchronize: true
-        });
-        repository = new TestCarRepository(TestCar, connection);
+        await clearDb();
+        useContainer(Container);
+        await createConnection(new DatabaseOption());
+        repository = Container.get(TestCarRepository);
         await repository.createBatch(dummyCars);
     });
 
@@ -72,12 +63,6 @@ describe("Repository Base", () => {
     });
 
     afterAll(async () => {
-        fs.unlink(dbPath, (err) => {
-                if (err) {
-                    console.log(err);
-                }
-                console.log("db deleted !");
-            }
-        );
+        await clearDb();
     });
 });
