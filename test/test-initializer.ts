@@ -3,10 +3,13 @@ import { createConnection, useContainer } from "typeorm";
 import { Container } from "typedi";
 import { DatabaseOption } from "./database-option";
 
-const dbPath: string = "./test/dwapitest.sqlite3";
-const entities: string[] = ["./test/artifacts/*.ts"];
+let dbPath: string = "./test/dwapitest.sqlite3";
+let entities: string[] = ["./test/artifacts/*.ts"];
 
-export let clearDb = async () => {
+export let clearDb = async (dbpath?: string) => {
+    if (dbpath) {
+        dbPath = dbpath;
+    }
     fs.unlink(dbPath, (err) => {
             if (err) {
                 console.log(err);
@@ -17,6 +20,12 @@ export let clearDb = async () => {
 };
 
 useContainer(Container);
-export let initDbConnection = async () => {
+export let initDbConnection = async (dbpath?: string, models?: string[]) => {
+    if (dbpath) {
+        dbPath = dbpath;
+    }
+    if (models) {
+        entities = models;
+    }
     await createConnection(DatabaseOption(dbPath, entities));
 };
