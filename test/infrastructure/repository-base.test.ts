@@ -1,22 +1,16 @@
-import { createConnection, useContainer } from "typeorm";
-import * as fs from "fs";
 import { TestCarRepository } from "../artifacts/test-car-repository";
 import { TestCar } from "../artifacts/test-car";
-import { TestCarModel } from "../artifacts/test-car-model";
 import { Container } from "typedi";
-import { clearDb } from "../testinit";
-import { DatabaseOption } from "../database-option";
+import { clearDb, initDbConnection } from "../test-initializer";
 
 describe("Repository Base", () => {
 
     const dummyCars = TestCar.getTestCars(5);
-    const dbPath: string = "test/dwapitest.sqlite3";
     let repository: TestCarRepository;
 
     beforeAll(async () => {
         await clearDb();
-        useContainer(Container);
-        await createConnection(new DatabaseOption());
+        await initDbConnection();
         repository = Container.get(TestCarRepository);
         await repository.createBatch(dummyCars);
     });

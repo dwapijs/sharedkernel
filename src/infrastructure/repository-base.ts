@@ -13,7 +13,6 @@ export abstract class RepositoryBase<T extends AggregateRoot> implements IReposi
     constructor(type: ObjectType<T>, @InjectConnection() connection: Connection) {
         this.type = type;
         this.connection = connection;
-        console.log(this.connection);
     }
 
     create(entity: T): Promise<T> {

@@ -1,7 +1,11 @@
-export class DatabaseOption {
-    logging: false;
-    type: "sqlite";
-    database: "test/dwapitest.sqlite3";
-    entities: ["./src/core/model/*.ts"];
-    synchronize: true;
-}
+import { ConnectionOptions } from "typeorm";
+
+export let DatabaseOption = (db: string, entities: string[]): ConnectionOptions => {
+    return {
+        logging: true,
+        type: "sqlite",
+        database: db,
+        entities: entities,
+        synchronize: true
+    };
+};
