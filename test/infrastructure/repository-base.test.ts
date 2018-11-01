@@ -2,6 +2,7 @@ import { TestCarRepository } from "../artifacts/test-car-repository";
 import { TestCar } from "../artifacts/test-car";
 import { Container } from "typedi";
 import { clearDb, initDbConnection } from "../test-initializer";
+import { useContainer } from "typeorm";
 
 describe("RepositoryBase", () => {
 
@@ -10,6 +11,7 @@ describe("RepositoryBase", () => {
 
     beforeAll(async () => {
         await clearDb();
+        useContainer(Container);
         await initDbConnection();
         repository = Container.get(TestCarRepository);
         await repository.createBatch(dummyCars);
