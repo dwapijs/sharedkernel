@@ -32,7 +32,6 @@
     "@types/jest": "^23.3.5",
     "@types/lodash": "^4.14.117",
     "@types/node": "^10.11.7",
-    "@types/sequelize": "^4.27.28",
     "@types/uuid": "^3.4.4",
     "sqlite3": "^4.0.2",
     "chai": "^4.2.0",
